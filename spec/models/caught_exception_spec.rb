@@ -4,6 +4,7 @@ describe EventLogger::CaughtException do
   let(:event) { event.create() }
   let(:example_exception) { StandardError.new("hello, pretty") }
   let(:caught_exception) { EventLogger::CaughtException.new(example_exception) }
+  
   it "can be initialized with Exception instance" do
     EventLogger::CaughtException.new(example_exception)
   end
