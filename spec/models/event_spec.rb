@@ -23,4 +23,11 @@ describe EventLogger::Event do
     e = EventLogger::Event.create(event_type: :train_coming, event_subtype: :train_with_supplies)
     (Time.now - EventLogger::Event.last.created_at).should be < 2.seconds
   end
+
+  it "has exception relation" do
+    e = EventLogger::Event.new(event_type: :train_coming, event_subtype: :train_with_supplies)
+    exc = StandardError.new("a message")
+    e.exception = EventLogger::Exception.new()
+    e.save!
+  end
 end
