@@ -1,10 +1,14 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'database_cleaner'
-require 'event_logger'
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../dummy/config/environment", __FILE__)
+require 'rspec/rails'
+require 'rspec/autorun'
+
+require 'database_cleaner'
+
+require 'event_logger'
 
 Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 

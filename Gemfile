@@ -14,7 +14,7 @@ gemspec
 # gem 'debugger'
 
 group :test do
-  gem "rspec"
+  gem "rspec-rails"
   gem "mocha"
   gem "database_cleaner"
   gem "mongoid", github: "mongoid/mongoid", branch: "master"
