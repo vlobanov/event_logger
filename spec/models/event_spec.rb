@@ -14,6 +14,11 @@ describe EventLogger::Event do
     EventLogger::Event.last.event_type.should == :train_coming
   end
 
+   it "has warning_level field" do
+    e = EventLogger::Event.create(warning_level: :error)
+    EventLogger::Event.last.warning_level.should == :error
+  end
+
   it "has event_subtype field" do
     e = EventLogger::Event.create(event_subtype: :train_with_supplies)
     EventLogger::Event.last.event_subtype.should == :train_with_supplies

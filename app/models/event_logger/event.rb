@@ -5,7 +5,7 @@ module EventLogger
 
     field :event_type, type: Symbol
     field :event_subtype, type: Symbol
-    field :warning_level, type: String
+    field :warning_level, type: Symbol
     field :description, type: String
 
     embeds_one :caught_exception
