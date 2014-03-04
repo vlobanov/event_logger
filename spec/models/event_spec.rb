@@ -64,4 +64,28 @@ describe EventLogger::Event do
       EventLogger::Event.create(event_type: :train_coming).to_s.should include "train_coming"
     end
   end
+
+  describe "default attributes" do
+    def event_class_with_default_attribute(attr_name, attr_val)
+      klass = Class.new(EventLogger::Event)             # class FireStartedToBurn < EventLogger::Event
+      klass.class_eval { send(attr_name, attr_val) }    #  event_type "fire_started_to_burn"
+      klass                                             # end
+    end
+
+    [:event_type, :event_subtype, :warning_level, :description].each do |field|
+      it "sets default #{field}" do
+        val = SecureRandom.hex(4)
+        klass = event_class_with_default_attribute(field, val)
+        klass.new().send(field).to_s.should == val
+      end
+
+      it "setting default #{field} does not affect other inherited classes" do
+        val = SecureRandom.hex(4)
+        klass = event_class_with_default_attribute(field, val)
+        klass.new().send(field).to_s.should == val
+        Class.new(EventLogger::Event).new.send(field).should be_nil
+        EventLogger::Event.new.send(field).should be_nil
+      end
+    end
+  end
 end

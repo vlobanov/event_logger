@@ -9,6 +9,7 @@ require 'rspec/autorun'
 require 'database_cleaner'
 
 require 'event_logger'
+require 'securerandom'
 
 Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 
