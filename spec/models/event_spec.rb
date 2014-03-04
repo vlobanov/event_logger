@@ -19,30 +19,25 @@ describe EventLogger::Event do
     EventLogger::Event.last.warning_level.should == :error
   end
 
-  it "has event_subtype field" do
-    e = EventLogger::Event.create(event_subtype: :train_with_supplies)
-    EventLogger::Event.last.event_subtype.should == :train_with_supplies
-  end
-
   it "has description field" do
     e = EventLogger::Event.create(description: "Wow!")
     EventLogger::Event.last.description.should == "Wow!"
   end
 
   it "has created_at field" do
-    e = EventLogger::Event.create(event_type: :train_coming, event_subtype: :train_with_supplies)
+    e = EventLogger::Event.create(event_type: :train_coming)
     (Time.now - EventLogger::Event.last.created_at).should be < 2.seconds
   end
 
   it "has exception relation" do
-    e = EventLogger::Event.new(event_type: :train_coming, event_subtype: :train_with_supplies)
+    e = EventLogger::Event.new(event_type: :train_coming)
     exc = StandardError.new("a message")
     e.caught_exception = EventLogger::CaughtException.new({})
     e.save!
   end
 
   describe "#to_s formatting by default" do
-    let(:event) { EventLogger::Event.create(event_type: :train_coming, event_subtype: :we_are_waiting, description: "well well") }
+    let(:event) { EventLogger::Event.create(event_type: :train_coming, description: "well well") }
 
     it "is not ugly" do
       event.to_s.should_not include("#<EventLogger::Event")
@@ -50,10 +45,6 @@ describe EventLogger::Event do
 
     it "includes event type" do
       event.to_s.should include event.event_type.to_s
-    end
-
-    it "includes event subtype" do
-      event.to_s.should include event.event_subtype.to_s
     end
 
     it "includes event description" do
@@ -72,7 +63,7 @@ describe EventLogger::Event do
       klass                                             # end
     end
 
-    [:event_type, :event_subtype, :warning_level, :description].each do |field|
+    [:event_type, :warning_level, :description].each do |field|
       it "sets default #{field}" do
         val = SecureRandom.hex(4)
         klass = event_class_with_default_attribute(field, val)
