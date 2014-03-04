@@ -3,8 +3,8 @@ module EventLogger
     include ::Mongoid::Document
     include ::Mongoid::Timestamps
 
-    field :event_type, type: String
-    field :event_subtype, type: String
-
+    field :event_type, type: Symbol
+    field :event_subtype, type: Symbol
+    field :warning_level, type: String
   end
 end
