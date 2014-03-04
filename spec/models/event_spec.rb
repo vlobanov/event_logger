@@ -27,7 +27,7 @@ describe EventLogger::Event do
   it "has exception relation" do
     e = EventLogger::Event.new(event_type: :train_coming, event_subtype: :train_with_supplies)
     exc = StandardError.new("a message")
-    e.caught_exception = EventLogger::CaughtException.new()
+    e.caught_exception = EventLogger::CaughtException.new({})
     e.save!
   end
 end
