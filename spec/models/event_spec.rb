@@ -56,6 +56,7 @@ describe EventLogger::Event do
     end
   end
 
+
   describe "default attributes" do
     def event_class_with_default_attribute(attr_name, attr_val)
       klass = Class.new(EventLogger::Event)             # class FireStartedToBurn < EventLogger::Event
@@ -76,6 +77,13 @@ describe EventLogger::Event do
         klass.new().send(field).to_s.should == val
         Class.new(EventLogger::Event).new.send(field).should be_nil
         EventLogger::Event.new.send(field).should be_nil
+      end
+    end
+
+    describe "event_type" do
+      it "adds the class to EventTypesCollection" do
+        klass = event_class_with_default_attribute(:event_type, :custom_event_something)
+        EventLogger::EventTypesCollection.get_class(:custom_event_something).should == klass
       end
     end
   end

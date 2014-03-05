@@ -14,11 +14,16 @@ module EventLogger
         description].compact.join(" ")
     end
 
-    [:event_type, :warning_level, :description].each do |f|
+    def self.event_type(val)
+      @defaults ||= {}
+      @defaults[:event_type] = val
+      EventTypesCollection.add(val, self)
+    end
+
+    [:warning_level, :description].each do |f|
       Event.singleton_class.instance_eval do
         self.send(:define_method, f) do |val|
-          @defaults ||= {}
-          @defaults[f] = val 
+          (@defaults ||= {})[f] = val 
         end
       end
     end
