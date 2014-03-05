@@ -59,7 +59,7 @@ describe EventLogger::Event do
   describe "default attributes" do
     def event_class_with_default_attribute(attr_name, attr_val)
       klass = Class.new(EventLogger::Event)             # class FireStartedToBurn < EventLogger::Event
-      klass.class_eval { send(attr_name, attr_val) }    #  event_type "fire_started_to_burn"
+      klass.class_eval { send(attr_name, attr_val) }    #  event_type "fire_starts_to_burn"
       klass                                             # end
     end
 
