@@ -21,6 +21,15 @@ describe EventLogger::Logger do
       EventLogger::Event.last.caught_exception.should be_nil
     end
 
+    it "creates event of class, corresponding to the type" do
+      (klass = Class.new(EventLogger::Event)).instance_eval do
+        event_type :i_woke_up
+        description "and want some coffee"
+      end
+      subject.log(:i_woke_up)
+      EventLogger::Event.last.description.should == "and want some coffee"
+    end
+
     context "when a block is given" do
       it "is executed" do
         expect { |probe| subject.log(:event, &probe) }.to yield_control

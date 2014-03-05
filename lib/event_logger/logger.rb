@@ -15,7 +15,9 @@ module EventLogger
     private
     
     def create_event(event_type, exception, description = nil)
-      event = Event.new(event_type: event_type, description: description)
+      event_klass = EventTypesCollection.get_class(event_type)
+      event = event_klass.new(event_type: event_type)
+      event.description = description if description
       event.caught_exception = CaughtException.new(exception) if exception
       event.save!
     end

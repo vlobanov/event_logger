@@ -11,22 +11,22 @@ describe EventLogger::Event do
 
   it "has event_type field" do
     e = EventLogger::Event.create(event_type: :train_coming)
-    EventLogger::Event.last.event_type.should == :train_coming
+    last_event.event_type.should == :train_coming
   end
 
    it "has warning_level field" do
     e = EventLogger::Event.create(warning_level: :error)
-    EventLogger::Event.last.warning_level.should == :error
+    last_event.warning_level.should == :error
   end
 
   it "has description field" do
     e = EventLogger::Event.create(description: "Wow!")
-    EventLogger::Event.last.description.should == "Wow!"
+    last_event.description.should == "Wow!"
   end
 
   it "has created_at field" do
     e = EventLogger::Event.create(event_type: :train_coming)
-    (Time.now - EventLogger::Event.last.created_at).should be < 2.seconds
+    (Time.now - last_event.created_at).should be < 2.seconds
   end
 
   it "has exception relation" do
@@ -34,6 +34,10 @@ describe EventLogger::Event do
     exc = StandardError.new("a message")
     e.caught_exception = EventLogger::CaughtException.new({})
     e.save!
+  end
+
+  def last_event
+    EventLogger::Event.last
   end
 
   describe "#to_s formatting by default" do
