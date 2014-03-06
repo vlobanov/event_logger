@@ -19,4 +19,8 @@ class EventLogger::CaughtException
       super
     end
   end
+
+  def to_s
+    [class_name, message].join(" ")
+  end
 end

@@ -11,7 +11,8 @@ module EventLogger
 
     def to_s
       ["#{event_type}",
-        description].compact.join(" ")
+        description,
+        caught_exception.to_s].delete_if(&:blank?).join(" ")
     end
 
     def self.event_type(val)

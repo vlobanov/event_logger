@@ -20,4 +20,9 @@ describe EventLogger::CaughtException do
   it "stores Exception backtrace" do
     caught_exception.backtrace.should == example_exception.backtrace
   end
+
+  describe "#to_s" do
+    specify { caught_exception.to_s.should include caught_exception.class_name }
+    specify { caught_exception.to_s.should include caught_exception.message }
+  end
 end
