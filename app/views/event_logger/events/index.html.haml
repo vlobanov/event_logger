@@ -1,5 +1,19 @@
-%table.table
+%table.table.table-hover
   - @events.each do |event|
-    %tr
-      %td=event.created_at
-      %td=event.to_s
+    - has_exception = !!event.caught_exception
+    - row_class = has_exception ? "danger" : (event.warning_level || "")
+    %tr{class: row_class}
+      %td.event-date
+        %a{href:"#", title: event.created_at.to_s}=event.created_at.strftime("%m/%d %H:%M:%S")
+      %td.event-description
+        %div.event-description=event.to_s
+        %div.event-messages{id: "event-messages-for-#{event.id}"}
+          %ul
+            - event.messages.each do |msg|
+              %li=msg
+      %td.event-message-count
+        - unless event.messages.blank?
+          %a.toggle-event-messages{"data-event-id"=> event.id}= pluralize(event.messages.count, 'message')
+      %td.event-exception
+        - if has_exception
+          = event.caught_exception.to_s

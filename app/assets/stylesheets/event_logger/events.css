@@ -1,0 +1,19 @@
+td.event-date {
+	width: 130px;
+}
+
+td.event-description {
+	width: 600px;
+}
+
+td.event-message-count {
+	width: 140px;
+}
+
+td.event-exception {
+	width: 310px;
+}
+
+div.event-messages {
+	display: none;
+}
