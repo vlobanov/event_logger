@@ -63,11 +63,6 @@ describe EventLogger::Event do
       event.to_s.should include event.description.to_s
     end
 
-    it "includes caught_exception" do
-      event.caught_exception = EventLogger::CaughtException.new(StandardError.new("hello, pretty"))
-      event.to_s.should include event.caught_exception.to_s
-    end
-
     it "works if only event_type is set" do
       EventLogger::Event.create(event_type: :train_coming).to_s.should include "train_coming"
     end
