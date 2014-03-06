@@ -1,1 +1,5 @@
-index.html.haml
+%table.table
+  - @events.each do |event|
+    %tr
+      %td=event.created_at
+      %td=event.to_s
