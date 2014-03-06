@@ -19,4 +19,5 @@ group :test do
   gem "database_cleaner"
   gem "mongoid", github: "mongoid/mongoid", branch: "master"
   gem "capybara"
+  gem "factory_girl_rails"
 end
