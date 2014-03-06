@@ -1,6 +1,6 @@
 class EventLogger::CaughtException
   include Mongoid::Document
-  embedded_in :event
+  embedded_in :event, class_name: "EventLogger::Event"
 
   field :class_name, type: String
   field :message, type: String
