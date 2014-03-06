@@ -11,9 +11,13 @@ require 'database_cleaner'
 require 'event_logger'
 require 'securerandom'
 
+require 'capybara/rails'
+
 Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 
 RSpec.configure do |config|
+  config.render_views
+
   config.mock_with :mocha
 
   config.before(:suite) do
