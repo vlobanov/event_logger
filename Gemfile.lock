@@ -12,12 +12,11 @@ GIT
 PATH
   remote: .
   specs:
-    event_logger (0.0.1)
+    event_logger (0.0.2)
       haml-rails
       jquery-rails
       rails (>= 4.0.0)
       therubyracer
-      twitter-bootstrap-rails
 
 GEM
   remote: https://rubygems.org/
@@ -54,7 +53,6 @@ GEM
     database_cleaner (1.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
-    execjs (2.0.2)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -133,11 +131,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.2.8)
-      actionpack (>= 3.1)
-      execjs
-      rails (>= 3.1)
-      railties (>= 3.1)
     tzinfo (0.3.38)
 
 PLATFORMS
