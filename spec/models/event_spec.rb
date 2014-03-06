@@ -36,6 +36,14 @@ describe EventLogger::Event do
     e.save!
   end
 
+  it "has messages collection" do
+    e = EventLogger::Event.new(event_type: :train_coming)
+    e.messages << "from west"
+    e.messages << "a little bit late"
+    e.save!
+    last_event.messages.size.should == 2
+  end
+
   def last_event
     EventLogger::Event.last
   end

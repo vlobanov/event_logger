@@ -8,17 +8,17 @@ describe EventLogger::Logger do
 
     it "takes event description as second argument" do
       subject.log(:event, "meatball")
-      EventLogger::Event.last.description.should == "meatball"
+      last_event.description.should == "meatball"
     end
 
     it "creates EventLogger::Event with given event type" do
       subject.log(:something_weird)
-      EventLogger::Event.last.event_type.should == :something_weird
+      last_event.event_type.should == :something_weird
     end
 
     it "doesn't have caught_exception if nothing was raised" do
       subject.log(:event, "meatball")
-      EventLogger::Event.last.caught_exception.should be_nil
+      last_event.caught_exception.should be_nil
     end
 
     it "creates event of class, corresponding to the type" do
@@ -27,7 +27,7 @@ describe EventLogger::Logger do
         description "and want some coffee"
       end
       subject.log(:i_woke_up)
-      EventLogger::Event.last.description.should == "and want some coffee"
+      last_event.description.should == "and want some coffee"
     end
 
     context "when a block is given" do
@@ -56,33 +56,62 @@ describe EventLogger::Logger do
               subject.log(:exploded_event) { raise example_exception }
             end.to raise_exception(example_exception.class)
 
-            EventLogger::Event.last.event_type.should == :exploded_event
+            last_event.event_type.should == :exploded_event
+          end
+
+          describe "passed argument" do
+            it "responds to <<" do
+              subject.log(:wordy_event) do |arg|
+                arg.should respond_to :<<
+              end
+            end
+
+            it "added to messages attribute" do
+              subject.log(:wordy_event) do |messages|
+                messages<< "foo"
+                messages<< "bar"
+              end
+              last_event.messages.should == ["foo", "bar"]
+            end
+
+            it "converts each added element to string" do
+              subject.log(:wordy_event) do |messages|
+                messages<< Date.today
+                messages<< 42
+                messages<< :foo
+              end
+              last_event.messages.should == [Date.today.to_s, "42", "foo"]
+            end
           end
 
           describe "caught exception" do
             it "is persisted" do
               subject.log(:exploded_event) { raise example_exception } rescue :dont_care
-              EventLogger::Event.last.caught_exception.should_not be_nil
+              last_event.caught_exception.should_not be_nil
             end
 
             it "has correct message field value" do
               subject.log(:exploded_event) { raise example_exception } rescue :dont_care
-              EventLogger::Event.last.caught_exception.message.should == example_exception.message
+              last_event.caught_exception.message.should == example_exception.message
             end
 
             it "has correct class_name field value" do
               AmazingException = Class.new(StandardError)
               subject.log(:exploded_event) { raise AmazingException } rescue :dont_care
-              EventLogger::Event.last.caught_exception.class_name.should == "AmazingException"
+              last_event.caught_exception.class_name.should == "AmazingException"
             end
 
             it "has correct backtrace field value" do
               subject.log(:exploded_event) { raise example_exception } rescue :dont_care
-              EventLogger::Event.last.caught_exception.backtrace.detect{|f| f[__FILE__]}.should_not be_nil
+              last_event.caught_exception.backtrace.detect{|f| f[__FILE__]}.should_not be_nil
             end
           end
         end
       end
     end
+  end
+
+  def last_event
+    EventLogger::Event.last
   end
 end

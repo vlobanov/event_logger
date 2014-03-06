@@ -6,6 +6,7 @@ module EventLogger
     field :event_type, type: Symbol, default: ->{ defaults[:event_type] }
     field :warning_level, type: Symbol, default: ->{ defaults[:warning_level] }
     field :description, type: String, default: ->{ defaults[:description] }
+    field :messages, type: Array, default: []
 
     embeds_one :caught_exception, class_name: "EventLogger::CaughtException"
 
