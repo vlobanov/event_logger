@@ -1,23 +1,30 @@
 = paginate @events, :theme => 'event_pagination', :outer_window => 2
-
-%table.table.table-hover
-  - @events.each do |event|
-    - has_exception = !!event.caught_exception
-    - row_class = has_exception ? "danger" : (event.warning_level || "")
-    %tr{class: row_class}
-      %td.event-date
-        %a{href:"#", title: event.created_at.to_s}=event.created_at.strftime("%m/%d %H:%M:%S")
-      %td.event-description
-        %div.event-description=event.to_s
-        %div.event-messages{id: "event-messages-for-#{event.id}"}
-          %ul
-            - event.messages.each do |msg|
-              %li=msg
-      %td.event-message-count
-        - unless event.messages.blank?
-          %a.toggle-event-messages{"data-event-id"=> event.id}= pluralize(event.messages.count, 'message')
-      %td.event-exception
-        - if has_exception
-          = event.caught_exception.to_s
-
-= paginate @events, :theme => 'event_pagination', :outer_window => 2
+.row
+  .col-md-9
+    %table.table.table-hover
+      - @events.each do |event|
+        - has_exception = !!event.caught_exception
+        - row_class = has_exception ? "danger" : (event.warning_level || "")
+        %tr{class: row_class}
+          %td.event-date
+            %a{href:"#", title: event.created_at.to_s}=event.created_at.strftime("%m/%d %H:%M:%S")
+          %td.event-description
+            %div.event-description=event.to_s
+            %div.event-messages{id: "event-messages-for-#{event.id}"}
+              %ul
+                - event.messages.each do |msg|
+                  %li=msg
+          %td.event-message-count
+            - unless event.messages.blank?
+              %a.toggle-event-messages{"data-event-id"=> event.id}= pluralize(event.messages.count, 'message')
+          %td.event-exception
+            - if has_exception
+              = event.caught_exception.to_s
+  .col-md-3
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Filters
+      .panel-body
+        Panel content
+.row
+  = paginate @events, :theme => 'event_pagination', :outer_window => 2

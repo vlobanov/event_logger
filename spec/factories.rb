@@ -4,6 +4,7 @@ FactoryGirl.define do
     description "ordinary thing"
 
     factory :event_with_exception do
+      event_type :event_bang_bang
       caught_exception EventLogger::CaughtException.new(StandardError.new("a bang"))
 
       factory :event_full do

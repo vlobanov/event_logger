@@ -19,6 +19,7 @@ require 'factories'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  #config.include Rails.application.routes.url_helpers
   config.render_views
 
   config.mock_with :mocha
