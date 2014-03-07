@@ -1,0 +1,5 @@
+- if current_page.first?
+  %li.disabled
+    %a &lt;
+- else
+  %li= link_to '&lt;'.html_safe, url, :rel => 'prev', :remote => remote

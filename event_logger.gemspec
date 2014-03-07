@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency "therubyracer"
   s.add_dependency "jquery-rails"
   s.add_dependency "haml-rails"
+  s.add_dependency "kaminari"
 end

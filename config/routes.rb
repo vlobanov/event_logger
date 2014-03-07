@@ -1,3 +1,4 @@
 EventLogger::Engine.routes.draw do
-  root to: "events#index"
+  match "/(:page)" => "events#index", via: :get
+  root to: "events#index", page: 1
 end

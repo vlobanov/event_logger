@@ -1,3 +1,5 @@
+= paginate @events, :theme => 'event_pagination', :outer_window => 2
+
 %table.table.table-hover
   - @events.each do |event|
     - has_exception = !!event.caught_exception
@@ -17,3 +19,5 @@
       %td.event-exception
         - if has_exception
           = event.caught_exception.to_s
+
+= paginate @events, :theme => 'event_pagination', :outer_window => 2
