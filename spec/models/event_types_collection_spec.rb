@@ -15,4 +15,10 @@ describe EventLogger::EventTypesCollection do
   it "returns EventLogger::Event if event_type is unknown" do
     EventLogger::EventTypesCollection.get_class(:hey_joe).should == EventLogger::Event
   end
+
+  it "returns all registered types" do
+    test_event_types = [:lazy, :dog, :jumps]
+    test_event_types.each { |t| EventLogger::EventTypesCollection.add(t, simple_inherited_event_class) }
+    test_event_types.each { |t| EventLogger::EventTypesCollection.all_types.should include t } 
+  end
 end

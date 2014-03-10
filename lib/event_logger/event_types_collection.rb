@@ -7,5 +7,9 @@ module EventLogger
     def self.get_class(event_type)
       (@types || {}).fetch(event_type) { EventLogger::Event }
     end
+
+    def self.all_types
+      (@types || {}).keys
+    end
   end
 end
