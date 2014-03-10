@@ -1,6 +1,32 @@
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Filters
+      .panel-body
+        = form_tag(events_filter_path, method: :get) do
+          .row
+            .col-md-3
+              = label_tag "Event type"
+              = select_tag :filter_type, options_for_select(@event_types, @filters.event_types), {:multiple => true, :size => 6, class: "form-control"}
+            .col-md-3
+              = label_tag "Exception"
+              = select_tag :filter_exception, options_for_select([["With or without exception", ""], ["With exception", "with_exception"], ["Without exception", "without_exception"]], @filters.exception.to_s), {class: "form-control"}
+              %br
+              %br
+              = submit_tag "Filter", class:"btn btn-default"
+            .col-md-6
+              / = label_tag "reservationtime", "Time"
+              / = datetime_field_tag "titi"
+              / .input-prepend.input-group
+              /   %span.add-on.input-group-addon
+              /     %i.glyphicon.glyphicon-calendar.fa.fa-calendar
+              /   %input.form-control{type: "text", value: ""}
+%h3
+  Found #{pluralize(@total_found, 'event')}
 = paginate @events, :theme => 'event_pagination', :outer_window => 2
 .row
-  .col-md-9
+  .col-md-12
     %table.table.table-hover
       - @events.each do |event|
         - has_exception = !!event.caught_exception
@@ -20,11 +46,10 @@
           %td.event-exception
             - if has_exception
               = event.caught_exception.to_s
-  .col-md-3
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title Filters
-      .panel-body
-        Panel content
 .row
   = paginate @events, :theme => 'event_pagination', :outer_window => 2
+
+:javascript
+  $(document).ready(function() {
+    $('input[name="daterange"]').daterangepicker();
+  });
