@@ -1,5 +1,5 @@
 module EventLogger
-  class EventsController < ApplicationController
+  class EventsController < ::ApplicationController
     layout 'event_logger/event_logger_application'
 
     FilterParameters = Struct.new(:exception, :event_types, :time_from, :time_to)
