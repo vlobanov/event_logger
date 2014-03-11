@@ -14,4 +14,10 @@ class ApplicationController < ActionController::Base
     $before_filter_method_counter ||= 0
     $before_filter_method_counter += 1
   end
+
+  protect_event_logger do
+    if $halt_filter_and_redirect_to_root
+      redirect_to root_path
+    end
+  end
 end
